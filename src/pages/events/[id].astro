@@ -7,6 +7,7 @@ import { inflateEvent } from '@/utils/data'
 import events from '@/data/events.json'
 import BaseLayout from '@/layouts/BaseLayout.astro'
 import PageContainer from '@/components/PageContainer.astro'
+import EventDetails from '@/components/EventDetails.astro'
 import { findImage } from '@/utils/image'
 
 export const getStaticPaths = (async () => {
@@ -17,7 +18,7 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>
 
 const { event: baseEvent } = Astro.props as Props
 const event = inflateEvent(baseEvent)
-const { sponsors, talks, description, date, link } = event
+const { sponsors, talks, description, date } = event
 let location = event.location ?? null
 const pageTitle = event.title
 
@@ -82,23 +83,7 @@ const findSponsorPhoto = (photo: string) => {
             </div>
           ))
       }
-      <ul>
-        <li>
-          🗓{' '}
-          {
-            new Date(date).toLocaleDateString(undefined, {
-              weekday: 'long',
-              month: 'long',
-              day: 'numeric',
-            })
-          }
-        </li>
-        <li>⏰ 5:30pm - 8:30pm</li>
-        {location && <li>📍 {location}</li>}
-        <li>
-          🎟 <a href={link}>RSVP</a>
-        </li>
-      </ul>
+      <EventDetails event={event} showRsvp />
       {
         hasTalks &&
           talks.map(t => (
@@ -138,7 +123,7 @@ const findSponsorPhoto = (photo: string) => {
 
   <PageContainer pageTitle={pageTitle}>
     {description && <p set:html={toHTML(description)} />}
-    {location && <p>{location}</p>}
+    {location && <p>{location.name}</p>}
     {
       hasSponsors &&
         sponsors.map(s => (
@@ -159,23 +144,7 @@ const findSponsorPhoto = (photo: string) => {
           </div>
         ))
     }
-    <ul>
-      <li>
-        📆{' '}
-        {
-          new Date(date).toLocaleDateString(undefined, {
-            weekday: 'long',
-            month: 'long',
-            day: 'numeric',
-          })
-        }
-      </li>
-      <li>⏰ 5:30pm - 8:30pm</li>
-      {location && <li>📍 {location}</li>}
-      <li>
-        🎟 <a href={link}>RSVP</a>
-      </li>
-    </ul>
+    <EventDetails event={event} showRsvp />
     {
       hasTalks &&
         talks.map(t => (

@@ -2,6 +2,7 @@
 import { toHTML } from '@/utils/markdown'
 import Sponsor from '@/components/Sponsor.astro'
 import TalkCard from '@/components/TalkCard.astro'
+import EventDetails from '@/components/EventDetails.astro'
 import { inflateEvent } from '@/utils/data'
 import type { SJSEvent } from '@/data/types'
 
@@ -10,6 +11,7 @@ const event = inflateEvent(baseEvent)
 ---
 
 <h3>{event.title}</h3>
+<EventDetails event={event} />
 {event.description && <p set:html={toHTML(event.description)} />}
 {event.sponsors.length > 0 && <h4>Thanks to our Sponsors ❤️</h4>}
 {event.sponsors.map(sponsor => <Sponsor sponsor={sponsor} />)}

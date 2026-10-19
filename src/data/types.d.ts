@@ -1,10 +1,21 @@
+export interface EventLocation {
+  name: string
+  address?: string
+  mapUrl?: string
+}
+
 export interface SJSEvent {
   id: string
   title: string
+  /** Local Seattle date, "YYYY-MM-DD" */
   date: string
+  /** Local Seattle time, 24h "HH:mm" */
+  startTime?: string
+  /** Local Seattle time, 24h "HH:mm" */
+  endTime?: string
   link?: string
   description?: string
-  location?: string
+  location?: EventLocation
   sponsors: string[]
   talks: string[]
 }
